@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurum — XAUUSD Gold Mastery Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --obsidian:#0a0a0b;
+    --obsidian-2:#0e0e10;
+    --panel:#141317;
+    --panel-2:#18171b;
+    --hair:rgba(201,162,39,.16);
+    --hair-strong:rgba(201,162,39,.32);
+    --gold:#c9a227;
+    --gold-bright:#f0d78c;
+    --gold-dim:#8a7226;
+    --ink:#f1ede2;
+    --muted:#9a9488;
+    --muted-2:#6b6659;
+    --up:#3ec98f;
+    --down:#e35b4f;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--obsidian);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold); color:#0a0a0b;}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1220px; margin:0 auto; padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker-bar{
+    border-bottom:1px solid var(--hair);
+    background:var(--obsidian-2);
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+    z-index:50;
+  }
+  .ticker-track{
+    display:inline-flex;
+    gap:48px;
+    padding:9px 0;
+    animation:tickerScroll 34s linear infinite;
+  }
+  @keyframes tickerScroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .tick{font-size:12px; letter-spacing:.02em; color:var(--muted); display:inline-flex; align-items:center; gap:7px;}
+  .tick b{color:var(--ink); font-weight:600;}
+  .tick.up{color:var(--up);} .tick.down{color:var(--down);}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    backdrop-filter:blur(16px) saturate(140%);
+    background:rgba(10,10,11,.72);
+    border-bottom:1px solid var(--hair);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:18px 0;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-size:21px; font-weight:500; letter-spacing:.01em;}
+  .logo-mark{width:30px; height:30px; position:relative;}
+  .navlinks{display:flex; gap:34px; font-size:13.5px; color:var(--muted); letter-spacing:.01em;}
+  .navlinks a{transition:color .25s;}
+  .navlinks a:hover{color:var(--gold-bright);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12px 26px; border-radius:2px; font-size:13.5px; font-weight:600;
+    letter-spacing:.03em; cursor:pointer; border:1px solid transparent;
+    transition:all .3s cubic-bezier(.2,.8,.2,1); text-transform:uppercase;
+  }
+  .btn-gold{background:linear-gradient(180deg,var(--gold-bright),var(--gold)); color:#100c02; box-shadow:0 0 0 rgba(201,162,39,0);}
+  .btn-gold:hover{box-shadow:0 6px 24px -4px rgba(201,162,39,.55); transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--hair-strong); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--gold); color:var(--gold-bright); background:rgba(201,162,39,.06);}
+  @media(max-width:860px){.navlinks{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:92vh; display:flex; align-items:center;
+    padding:80px 0 60px;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,.10), transparent 60%),
+      linear-gradient(180deg, var(--obsidian) 0%, #0c0b0d 100%);
+    overflow:hidden;
+  }
+  #heroCanvas{position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none;}
+  .hero-grain{position:absolute; inset:0; pointer-events:none; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .hero-inner{position:relative; z-index:2; max-width:760px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace;
+    font-size:12px; letter-spacing:.14em; color:var(--gold-bright); text-transform:uppercase;
+    padding:7px 14px; border:1px solid var(--hair-strong); border-radius:100px; margin-bottom:26px;
+    background:rgba(201,162,39,.05);
+  }
+  .pulse-dot{width:6px; height:6px; border-radius:50%; background:var(--up); box-shadow:0 0 0 0 rgba(62,201,143,.6); animation:pulseDot 2s infinite;}
+  @keyframes pulseDot{
+    0%{box-shadow:0 0 0 0 rgba(62,201,143,.55);}
+    70%{box-shadow:0 0 0 8px rgba(62,201,143,0);}
+    100%{box-shadow:0 0 0 0 rgba(62,201,143,0);}
+  }
+  .hero h1{
+    font-size:clamp(40px,6.4vw,74px); font-weight:500; line-height:1.02; letter-spacing:-.015em;
+    margin-bottom:26px;
+  }
+  .hero h1 em{font-style:italic; color:var(--gold-bright); font-weight:400;}
+  .hero p.lead{font-size:18px; line-height:1.6; color:var(--muted); max-width:520px; margin-bottom:36px;}
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:56px;}
+  .play-ico{width:32px; height:32px; border-radius:50%; border:1px solid currentColor; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+
+  .hero-stats{display:grid; grid-template-columns:repeat(4,auto); gap:44px;}
+  @media(max-width:760px){.hero-stats{grid-template-columns:repeat(2,1fr); gap:28px;}}
+  .stat b{display:block; font-family:'Fraunces',serif; font-size:30px; font-weight:500; color:var(--gold-bright); font-variant-numeric:tabular-nums;}
+  .stat span{font-size:12px; color:var(--muted-2); letter-spacing:.03em; text-transform:uppercase; margin-top:4px; display:block;}
+
+  /* ---------- section shell ---------- */
+  section{padding:120px 0; position:relative;}
+  .section-head{max-width:640px; margin-bottom:64px;}
+  .kicker{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; display:flex; align-items:center; gap:10px;}
+  .kicker::before{content:''; width:22px; height:1px; background:var(--gold);}
+  .section-head h2{font-size:clamp(30px,4vw,44px); font-weight:500; letter-spacing:-.01em; line-height:1.1;}
+  .section-head p{color:var(--muted); font-size:16px; margin-top:16px; line-height:1.6; max-width:520px;}
+  .hr{border:0; border-top:1px solid var(--hair);}
+
+  /* ---------- live gold section ---------- */
+  .terminal{
+    border:1px solid var(--hair-strong); border-radius:6px; background:linear-gradient(180deg,var(--panel),var(--obsidian-2));
+    overflow:hidden; box-shadow:0 40px 80px -30px rgba(0,0,0,.6);
+  }
+  .terminal-head{display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-bottom:1px solid var(--hair);}
+  .terminal-head .pair{font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:600; letter-spacing:.02em;}
+  .terminal-price{font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:600; color:var(--up);}
+  .terminal-dots span{width:9px; height:9px; border-radius:50%; display:inline-block; margin-left:6px; background:var(--muted-2); opacity:.5;}
+  #chartCanvas{width:100%; height:380px; display:block;}
+  .terminal-foot{display:flex; gap:10px; padding:16px 22px; border-top:1px solid var(--hair); flex-wrap:wrap;}
+  .signal-tag{font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:6px 12px; border-radius:100px; letter-spacing:.04em;}
+  .signal-tag.buy{background:rgba(62,201,143,.12); color:var(--up); border:1px solid rgba(62,201,143,.3);}
+  .signal-tag.sell{background:rgba(227,91,79,.12); color:var(--down); border:1px solid rgba(227,91,79,.3);}
+
+  /* ---------- course ---------- */
+  .course-card{
+    border:1px solid var(--hair-strong); border-radius:6px; padding:48px;
+    background:linear-gradient(160deg, rgba(201,162,39,.07), rgba(201,162,39,0) 55%), var(--panel);
+    display:grid; grid-template-columns:1.3fr 1fr; gap:56px; align-items:center;
+  }
+  @media(max-width:860px){.course-card{grid-template-columns:1fr; padding:32px;}}
+  .course-title{font-size:clamp(26px,3vw,36px); font-weight:500; margin-bottom:14px;}
+  .course-meta-row{display:flex; gap:28px; margin:26px 0; flex-wrap:wrap;}
+  .course-meta-row div span{display:block; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-2); margin-bottom:6px;}
+  .course-meta-row div b{font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--gold-bright);}
+  .checklist{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:12px 20px;}
+  .checklist li{font-size:14px; color:var(--muted); display:flex; align-items:center; gap:9px;}
+  .checklist li::before{content:''; width:5px; height:5px; background:var(--gold); flex-shrink:0; transform:rotate(45deg);}
+  .price-box{border:1px solid var(--hair-strong); border-radius:4px; padding:32px; text-align:center; background:rgba(0,0,0,.2);}
+  .price-box .fee{font-family:'Fraunces',serif; font-size:44px; color:var(--gold-bright); font-weight:500;}
+  .price-box .fee-note{font-size:12px; color:var(--muted-2); margin-top:4px; margin-bottom:24px;}
+
+  /* ---------- curriculum ---------- */
+  .curr-row{display:flex; border-top:1px solid var(--hair); padding:30px 0; gap:36px; align-items:baseline; transition:padding-left .3s;}
+  .curr-row:last-child{border-bottom:1px solid var(--hair);}
+  .curr-row:hover{padding-left:10px; background:linear-gradient(90deg, rgba(201,162,39,.04), transparent);}
+  .curr-num{font-family:'JetBrains Mono',monospace; color:var(--gold-dim); font-size:14px; width:70px; flex-shrink:0;}
+  .curr-week{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-2); width:90px; flex-shrink:0;}
+  .curr-title{font-family:'Fraunces',serif; font-size:24px; font-weight:500;}
+  .curr-desc{color:var(--muted); font-size:14.5px; max-width:340px; margin-left:auto; text-align:right;}
+  @media(max-width:760px){.curr-row{flex-wrap:wrap;} .curr-desc{text-align:left; margin-left:0;}}
+
+  /* ---------- why grid ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair);}
+  @media(max-width:860px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  .why-card{background:var(--obsidian); padding:36px 30px; transition:background .3s;}
+  .why-card:hover{background:var(--panel);}
+  .why-ico{width:38px; height:38px; margin-bottom:22px; color:var(--gold); opacity:.9;}
+  .why-card h3{font-size:17px; font-weight:600; margin-bottom:10px; font-family:'Inter',sans-serif;}
+  .why-card p{font-size:13.5px; color:var(--muted); line-height:1.6;}
+
+  /* ---------- stories ---------- */
+  .story-track{display:flex; gap:20px; overflow-x:auto; padding-bottom:12px; scroll-snap-type:x mandatory;}
+  .story-track::-webkit-scrollbar{height:5px;}
+  .story-track::-webkit-scrollbar-thumb{background:var(--hair-strong);}
+  .story-card{
+    min-width:320px; scroll-snap-align:start; border:1px solid var(--hair); border-radius:6px;
+    padding:28px; background:var(--panel); flex-shrink:0;
+  }
+  .story-top{display:flex; align-items:center; gap:12px; margin-bottom:18px;}
+  .avatar{width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--gold),#5a4a12); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; color:#100c02;}
+  .story-name{font-size:14px; font-weight:600;}
+  .story-role{font-size:11.5px; color:var(--muted-2);}
+  .story-quote{font-size:14.5px; color:var(--muted); line-height:1.65; margin-bottom:16px;}
+  .story-profit{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--up);}
+  .sample-tag{font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted-2); border:1px solid var(--hair); padding:3px 8px; border-radius:100px; display:inline-block; margin-top:14px;}
+
+  /* ---------- countdown ---------- */
+  .countdown-sec{
+    background:radial-gradient(ellipse 70% 100% at 50% 0%, rgba(201,162,39,.08), transparent 70%), var(--obsidian-2);
+    border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); text-align:center;
+  }
+  .flip-row{display:flex; gap:18px; justify-content:center; margin-top:44px; flex-wrap:wrap;}
+  .flip{width:104px;}
+  .flip-face{
+    background:var(--panel); border:1px solid var(--hair-strong); border-radius:6px; padding:18px 0;
+    font-family:'JetBrains Mono',monospace; font-size:40px; font-weight:600; color:var(--gold-bright);
+    text-align:center; font-variant-numeric:tabular-nums; box-shadow:0 20px 40px -20px rgba(0,0,0,.6);
+  }
+  .flip-label{font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-2); margin-top:10px;}
+
+  /* ---------- payment ---------- */
+  .pay-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--hair); border:1px solid var(--hair); border-radius:6px; overflow:hidden;}
+  @media(max-width:760px){.pay-grid{grid-template-columns:1fr;}}
+  .pay-col{background:var(--panel); padding:44px;}
+  .qr-box{width:180px; height:180px; margin:24px auto; background:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
+  .pay-methods{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;}
+  .pay-method{border:1px solid var(--hair-strong); border-radius:4px; padding:14px; text-align:center; font-size:12.5px; color:var(--muted); cursor:pointer; transition:all .25s;}
+  .pay-method:hover{border-color:var(--gold); color:var(--gold-bright); background:rgba(201,162,39,.05);}
+
+  /* ---------- contact / footer ---------- */
+  footer{border-top:1px solid var(--hair); padding:64px 0 32px; background:var(--obsidian-2);}
+  .foot-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:56px;}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+  .foot-col h4{font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-2); margin-bottom:18px;}
+  .foot-col a{display:block; font-size:14px; color:var(--muted); margin-bottom:12px; transition:color .25s;}
+  .foot-col a:hover{color:var(--gold-bright);}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:28px; border-top:1px solid var(--hair); font-size:12.5px; color:var(--muted-2); flex-wrap:wrap; gap:12px;}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  .whatsapp-fab{
+    position:fixed; bottom:26px; right:26px; z-index:60; width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold)); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px -6px rgba(201,162,39,.5); cursor:pointer; color:#100c02;
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="wrap" style="padding:0;">
+    <div class="ticker-track mono" id="tickerTrack"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">
+        <svg class="logo-mark" viewBox="0 0 30 30" fill="none">
+          <path d="M15 2L27 9V21L15 28L3 21V9L15 2Z" stroke="#c9a227" stroke-width="1.2"/>
+          <path d="M15 9L21 13V19L15 23L9 19V13L15 9Z" fill="#c9a227" opacity="0.85"/>
+        </svg>
+        Aurum
+      </div>
+      <div class="navlinks">
+        <a href="#chart">Live Gold</a>
+        <a href="#course">Course</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#stories">Results</a>
+        <a href="#enroll">Enroll</a>
+      </div>
+      <a href="#enroll" class="btn btn-gold">Register Now</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:0;">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-grain"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="pulse-dot"></span> XAUUSD LIVE &nbsp;·&nbsp; NEXT COHORT AUG 15</div>
+      <h1 class="reveal in">Master gold.<br>Trade it <em>like a desk.</em></h1>
+      <p class="lead">A 30-day, live-taught XAUUSD programme built around price action, smart money concepts, and risk discipline — not signals to follow blindly.</p>
+      <div class="hero-ctas">
+        <a href="#enroll" class="btn btn-gold">Register Now</a>
+        <a href="#chart" class="btn btn-ghost"><span class="play-ico">▶</span> Watch the desk live</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b data-count="5000" data-suffix="+">0</b><span>Students Trained</span></div>
+        <div class="stat"><b data-count="10" data-suffix="+">0</b><span>Years On the Desk</span></div>
+        <div class="stat"><b data-count="30">0</b><span>Days, Every Day</span></div>
+        <div class="stat"><b data-count="11" data-suffix="PM">0</b><span>Live Session Start</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE GOLD TERMINAL -->
+<section id="chart">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">The Trading Desk</div>
+      <h2>Watch gold move, live in class.</h2>
+      <p>Every session opens on the same screen you'll trade from — real chart structure, marked liquidity, and entries called in real time.</p>
+    </div>
+    <div class="terminal reveal">
+      <div class="terminal-head">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span class="pair">XAU/USD</span>
+          <span class="terminal-price" id="livePrice">2,431.80</span>
+          <span id="priceDelta" class="mono" style="font-size:13px; color:var(--up);">+0.42%</span>
+        </div>
+        <div class="terminal-dots"><span></span><span></span><span></span></div>
+      </div>
+      <canvas id="chartCanvas"></canvas>
+      <div class="terminal-foot">
+        <span class="signal-tag buy">▲ BUY · 2,428.10 · demo signal</span>
+        <span class="signal-tag sell">▼ SELL · 2,441.60 · demo signal</span>
+        <span class="signal-tag" style="color:var(--muted); border:1px solid var(--hair);">Illustrative simulation — not live market data</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSE -->
+<section id="course">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">The Programme</div>
+      <h2>XAUUSD Gold Mastery Course</h2>
+    </div>
+    <div class="course-card reveal">
+      <div>
+        <div class="course-title">Registration opens <span style="color:var(--gold-bright);">15 August 2026</span></div>
+        <p style="color:var(--muted); font-size:15px; line-height:1.6;">Thirty days, one pair, daily live class. Built for traders who want to understand structure — not chase signals.</p>
+        <div class="course-meta-row">
+          <div><span>Duration</span><b>30 Days</b></div>
+          <div><span>Access</span><b>30 Days</b></div>
+          <div><span>Live Class</span><b>Daily</b></div>
+          <div><span>Time</span><b>11PM–12AM</b></div>
+        </div>
+        <ul class="checklist">
+          <li>Live trading sessions</li>
+          <li>Strategy frameworks</li>
+          <li>Risk management</li>
+          <li>Trading psychology</li>
+          <li>Smart money concepts</li>
+          <li>ICT concepts</li>
+          <li>Price action</li>
+          <li>Support &amp; resistance</li>
+          <li>Liquidity mapping</li>
+          <li>Trading journal review</li>
+        </ul>
+      </div>
+      <div class="price-box">
+        <div class="fee">₹9,999</div>
+        <div class="fee-note">One-time · full programme access</div>
+        <a href="#enroll" class="btn btn-gold" style="width:100%;">Secure Your Seat</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Week by Week</div>
+      <h2>Four weeks, in order — because the order matters.</h2>
+    </div>
+    <div class="reveal">
+      <div class="curr-row">
+        <span class="curr-num">01</span>
+        <span class="curr-week">Week 1</span>
+        <span class="curr-title">Forex Basics</span>
+        <span class="curr-desc">Market structure, sessions, lot sizing, and how gold actually trades.</span>
+      </div>
+      <div class="curr-row">
+        <span class="curr-num">02</span>
+        <span class="curr-week">Week 2</span>
+        <span class="curr-title">Price Action</span>
+        <span class="curr-desc">Reading candles and structure without indicators cluttering the chart.</span>
+      </div>
+      <div class="curr-row">
+        <span class="curr-num">03</span>
+        <span class="curr-week">Week 3</span>
+        <span class="curr-title">Smart Money Concepts</span>
+        <span class="curr-desc">Liquidity, order blocks, and where institutions are likely positioned.</span>
+      </div>
+      <div class="curr-row">
+        <span class="curr-num">04</span>
+        <span class="curr-week">Week 4</span>
+        <span class="curr-title">Live Trading</span>
+        <span class="curr-desc">You call the trades, live, with the desk reviewing every entry.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Why This Desk</div>
+      <h2>Built around access, not just content.</h2>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0 32px;">
+    <div class="why-grid reveal">
+      <div class="why-card"><h3>Professional Mentors</h3><p>Taught by traders who run the desk daily, not course-only instructors.</p></div>
+      <div class="why-card"><h3>Lifetime Community</h3><p>Stay in the trading room long after the 30 days end.</p></div>
+      <div class="why-card"><h3>Daily Live Trading</h3><p>No pre-recorded replays passed off as "live" sessions.</p></div>
+      <div class="why-card"><h3>Doubt Sessions</h3><p>Dedicated time to break down your own charts, not generic Q&amp;A.</p></div>
+      <div class="why-card"><h3>Premium PDF Notes</h3><p>Every session distilled into a reference you'll actually reopen.</p></div>
+      <div class="why-card"><h3>Trading Psychology</h3><p>The discipline side most courses skip entirely.</p></div>
+      <div class="why-card"><h3>Certificate</h3><p>Proof of completion once you've finished all four weeks.</p></div>
+      <div class="why-card"><h3>Risk-First Framework</h3><p>Position sizing and drawdown rules before a single entry.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">From the Trading Room</div>
+      <h2>What past cohorts say.</h2>
+      <p>Sample profiles shown for design reference — replace with verified, consenting student stories before launch.</p>
+    </div>
+    <div class="story-track reveal">
+      <div class="story-card">
+        <div class="story-top"><div class="avatar">R</div><div><div class="story-name">Rohit S.</div><div class="story-role">Cohort 04</div></div></div>
+        <p class="story-quote">"The liquidity concept finally clicked in week 3 — I stopped entering on impulse."</p>
+        <div class="story-profit">Journal discipline: 21/30 days logged</div>
+        <span class="sample-tag">Sample profile</span>
+      </div>
+      <div class="story-card">
+        <div class="story-top"><div class="avatar">A</div><div><div class="story-name">Ananya K.</div><div class="story-role">Cohort 03</div></div></div>
+        <p class="story-quote">"Risk management week changed how I size every position, not just gold."</p>
+        <div class="story-profit">Max drawdown rule adopted</div>
+        <span class="sample-tag">Sample profile</span>
+      </div>
+      <div class="story-card">
+        <div class="story-top"><div class="avatar">V</div><div><div class="story-name">Vikram P.</div><div class="story-role">Cohort 02</div></div></div>
+        <p class="story-quote">"Daily live class kept me accountable in a way recorded content never did."</p>
+        <div class="story-profit">Completed all 4 weeks</div>
+        <span class="sample-tag">Sample profile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="countdown-sec">
+  <div class="wrap">
+    <div class="kicker" style="justify-content:center;">Registration Window</div>
+    <h2 style="font-size:clamp(26px,3.6vw,40px);">Opens 15 August 2026</h2>
+    <div class="flip-row mono" id="countdown">
+      <div class="flip"><div class="flip-face" id="cd-d">00</div><div class="flip-label">Days</div></div>
+      <div class="flip"><div class="flip-face" id="cd-h">00</div><div class="flip-label">Hours</div></div>
+      <div class="flip"><div class="flip-face" id="cd-m">00</div><div class="flip-label">Minutes</div></div>
+      <div class="flip"><div class="flip-face" id="cd-s">00</div><div class="flip-label">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section id="enroll">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Reserve Your Seat</div>
+      <h2>Complete your registration.</h2>
+      <p>Payment UI shown for design purposes — wire this to a real gateway (e.g. Razorpay) server-side before accepting live payments.</p>
+    </div>
+    <div class="pay-grid reveal">
+      <div class="pay-col">
+        <h3 style="font-family:'Fraunces',serif; font-size:20px; margin-bottom:6px;">Scan to pay</h3>
+        <p style="font-size:13px; color:var(--muted-2);">UPI · any banking app</p>
+        <div class="qr-box">
+          <svg width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="#fff"/>
+            <g fill="#0a0a0b">
+              <rect x="10" y="10" width="30" height="30"/><rect x="18" y="18" width="14" height="14" fill="#fff"/><rect x="22" y="22" width="6" height="6"/>
+              <rect x="110" y="10" width="30" height="30"/><rect x="118" y="18" width="14" height="14" fill="#fff"/><rect x="122" y="22" width="6" height="6"/>
+              <rect x="10" y="110" width="30" height="30"/><rect x="18" y="118" width="14" height="14" fill="#fff"/><rect x="22" y="122" width="6" height="6"/>
+              <rect x="50" y="10" width="8" height="8"/><rect x="66" y="10" width="8" height="8"/><rect x="82" y="18" width="8" height="8"/>
+              <rect x="50" y="50" width="8" height="8"/><rect x="66" y="58" width="8" height="8"/><rect x="82" y="50" width="8" height="8"/>
+              <rect x="98" y="66" width="8" height="8"/><rect x="50" y="82" width="8" height="8"/><rect x="66" y="90" width="8" height="8"/>
+              <rect x="98" y="98" width="8" height="8"/><rect x="114" y="82" width="8" height="8"/><rect x="66" y="114" width="8" height="8"/>
+              <rect x="90" y="122" width="8" height="8"/><rect x="106" y="114" width="8" height="8"/><rect x="122" y="98" width="8" height="8"/>
+            </g>
+          </svg>
+        </div>
+        <p style="text-align:center; font-size:12px; color:var(--muted-2);">Placeholder QR — generate a real one server-side</p>
+      </div>
+      <div class="pay-col">
+        <h3 style="font-family:'Fraunces',serif; font-size:20px; margin-bottom:20px;">Or choose a method</h3>
+        <div class="pay-methods">
+          <div class="pay-method">UPI</div>
+          <div class="pay-method">Card</div>
+          <div class="pay-method">Net Banking</div>
+          <div class="pay-method">Razorpay Checkout</div>
+        </div>
+        <a href="#" class="btn btn-gold" style="width:100%; margin-top:26px;">Pay ₹9,999 with Razorpay</a>
+        <p style="font-size:11.5px; color:var(--muted-2); margin-top:14px;">By continuing you agree to the programme terms. This button requires backend integration to process real payments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:14px;">Aurum</div>
+        <p style="font-size:13.5px; color:var(--muted); max-width:280px; line-height:1.6;">A live-taught XAUUSD programme for traders who want structure, not signals.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Programme</h4>
+        <a href="#course">Course</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#enroll">Enroll</a>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <a href="#">WhatsApp</a>
+        <a href="#">Telegram</a>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="#">hello@aurum-academy.example</a>
+        <a href="#">Coimbatore, Tamil Nadu</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Aurum XAUUSD Academy. Trading involves substantial risk of loss.</span>
+      <span>Design reference build — not a live product.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="whatsapp-fab">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.36C8.53 21.48 10.22 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.13c-.22.62-1.28 1.19-1.77 1.24-.45.05-1 .08-1.62-.1-.37-.11-.85-.27-1.46-.53-2.57-1.11-4.24-3.7-4.37-3.87-.13-.17-1.05-1.39-1.05-2.65 0-1.26.66-1.88.9-2.13.22-.24.48-.3.64-.3h.46c.15 0 .35-.02.53.4.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.13.29-.26.44-.13.15-.28.34-.4.46-.13.13-.27.27-.12.53.15.27.68 1.12 1.46 1.82 1 .89 1.85 1.17 2.11 1.3.27.13.42.11.58-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.07.11.07.62-.15 1.24z"/></svg>
+</div>
+
+<script>
+// ---------- ticker ----------
+const pairs = [
+  {n:'XAUUSD', p:2431.80, d:0.42},{n:'XAGUSD', p:28.94, d:-0.18},{n:'EURUSD', p:1.0862, d:0.11},
+  {n:'GBPUSD', p:1.2734, d:-0.06},{n:'USDJPY', p:156.21, d:0.29},{n:'US30', p:39824, d:0.15},
+  {n:'DXY', p:104.62, d:-0.09},{n:'BTCUSD', p:64211, d:1.24}
+];
+let tickerHTML = '';
+for(let i=0;i<2;i++){
+  pairs.forEach(x=>{
+    const up = x.d >= 0;
+    tickerHTML += `<span class="tick ${up?'up':'down'}"><b>${x.n}</b> ${x.p.toLocaleString()} ${up?'▲':'▼'} ${Math.abs(x.d)}%</span>`;
+  });
+}
+document.getElementById('tickerTrack').innerHTML = tickerHTML;
+
+// ---------- reveal on scroll ----------
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- count up stats ----------
+document.querySelectorAll('.stat b').forEach(el=>{
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  let started = false;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !started){
+        started = true;
+        let cur = 0;
+        const step = Math.max(1, Math.round(target/40));
+        const t = setInterval(()=>{
+          cur += step;
+          if(cur >= target){ cur = target; clearInterval(t); }
+          el.textContent = cur + suffix;
+        }, 30);
+      }
+    });
+  },{threshold:0.5});
+  obs.observe(el);
+});
+
+// ---------- countdown ----------
+function updateCountdown(){
+  const target = new Date('2026-08-15T00:00:00');
+  const now = new Date();
+  let diff = Math.max(0, target - now);
+  const d = Math.floor(diff/86400000); diff -= d*86400000;
+  const h = Math.floor(diff/3600000); diff -= h*3600000;
+  const m = Math.floor(diff/60000); diff -= m*60000;
+  const s = Math.floor(diff/1000);
+  document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ---------- hero ambient particles ----------
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,particles=[];
+  function resize(){
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  const count = window.innerWidth < 700 ? 26 : 55;
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*w, y: Math.random()*h,
+      r: Math.random()*1.6+0.4,
+      vy: -(Math.random()*0.25+0.05),
+      vx: (Math.random()-0.5)*0.15,
+      a: Math.random()*0.5+0.15
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.y += p.vy; p.x += p.vx;
+      if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(201,162,39,${p.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ---------- candlestick terminal ----------
+(function(){
+  const canvas = document.getElementById('chartCanvas');
+  const ctx = canvas.getContext('2d');
+  let w,h;
+  function resize(){
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  let price = 2431.80;
+  let candles = [];
+  const maxCandles = 46;
+  function seed(){
+    let p = price - 8;
+    for(let i=0;i<maxCandles;i++){
+      const open = p;
+      const close = open + (Math.random()-0.48)*3.2;
+      const high = Math.max(open,close) + Math.random()*1.6;
+      const low = Math.min(open,close) - Math.random()*1.6;
+      candles.push({open,close,high,low});
+      p = close;
+    }
+    price = candles[candles.length-1].close;
+  }
+  seed();
+
+  function tick(){
+    const last = candles[candles.length-1];
+    const open = last.close;
+    const close = open + (Math.random()-0.47)*2.6;
+    const high = Math.max(open,close) + Math.random()*1.3;
+    const low = Math.min(open,close) - Math.random()*1.3;
+    candles.push({open,close,high,low});
+    if(candles.length > maxCandles) candles.shift();
+    price = close;
+    document.getElementById('livePrice').textContent = price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const delta = document.getElementById('priceDelta');
+    const up = close >= open;
+    delta.style.color = up ? 'var(--up)' : 'var(--down)';
+    delta.textContent = (up?'+':'') + (((close-open)/open)*100).toFixed(2) + '%';
+  }
+  setInterval(tick, 1400);
+
+  function render(){
+    const cw = canvas.offsetWidth, ch = canvas.offsetHeight;
+    ctx.clearRect(0,0,cw,ch);
+
+    // grid
+    ctx.strokeStyle = 'rgba(201,162,39,0.06)';
+    ctx.lineWidth = 1;
+    for(let i=0;i<=4;i++){
+      const y = (ch/4)*i;
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cw,y); ctx.stroke();
+    }
+
+    const allHigh = Math.max(...candles.map(c=>c.high));
+    const allLow = Math.min(...candles.map(c=>c.low));
+    const pad = (allHigh-allLow)*0.15;
+    const top = allHigh+pad, bot = allLow-pad;
+    const cwidth = cw / maxCandles;
+
+    candles.forEach((c,i)=>{
+      const x = i*cwidth + cwidth/2;
+      const yOpen = ch - ((c.open-bot)/(top-bot))*ch;
+      const yClose = ch - ((c.close-bot)/(top-bot))*ch;
+      const yHigh = ch - ((c.high-bot)/(top-bot))*ch;
+      const yLow = ch - ((c.low-bot)/(top-bot))*ch;
+      const up = c.close >= c.open;
+      const col = up ? '#3ec98f' : '#e35b4f';
+
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x,yHigh); ctx.lineTo(x,yLow); ctx.stroke();
+
+      ctx.fillStyle = col;
+      const bodyTop = Math.min(yOpen,yClose);
+      const bodyH = Math.max(2, Math.abs(yClose-yOpen));
+      ctx.fillRect(x-cwidth*0.32, bodyTop, cwidth*0.64, bodyH);
+    });
+
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
