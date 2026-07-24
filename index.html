@@ -738,5 +738,37 @@ setInterval(updateCountdown, 1000);
   render();
 })();
 </script>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBvy8paneyRBde5YMVZzAA7dYiPIE6oU2I",
+  authDomain: "aurum-forex-academy.firebaseapp.com",
+  projectId: "aurum-forex-academy",
+  storageBucket: "aurum-forex-academy.firebasestorage.app",
+  messagingSenderId: "795346323115",
+  appId: "1:795346323115:web:19a7f0989f75b71abcd9ee"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.auth = auth;
+window.db = db;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.signOut = signOut;
+</script>
 </body>
 </html>
