@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificates — Admin — Aurum Forex Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="page-loader" id="pageLoader"><div class="spinner"></div></div>
+
+<div class="dash">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Aurum <span class="badge warn" style="margin-left:4px;">Admin</span></div>
+    <div class="side-group"><div class="side-label">Overview</div><a href="admin.html" class="side-link"><span class="dot"></span>Analytics</a></div>
+    <div class="side-group">
+      <div class="side-label">Manage</div>
+      <a href="students.html" class="side-link"><span class="dot"></span>Students</a>
+      <a href="courses.html" class="side-link"><span class="dot"></span>Courses</a>
+      <a href="videos.html" class="side-link"><span class="dot"></span>Videos</a>
+      <a href="notes.html" class="side-link"><span class="dot"></span>PDF Notes</a>
+      <div class="side-link active"><span class="dot"></span>Certificates</div>
+      <a href="announcements.html" class="side-link"><span class="dot"></span>Announcements</a>
+      <a href="payments.html" class="side-link"><span class="dot"></span>Payments</a>
+    </div>
+    <div class="side-group" style="margin-top:auto;">
+      <a href="dashboard.html" class="side-link"><span class="dot"></span>Student view</a>
+      <a href="#" id="logoutBtn" class="side-link" style="color:var(--down);"><span class="dot"></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div class="dash-welcome"><h1>Certificates</h1><p>Generate a completion certificate for a student.</p></div>
+      <div></div>
+    </div>
+
+    <div class="panel" style="margin-bottom:24px;">
+      <h3>Issue a certificate</h3>
+      <div class="auth-msg" id="certMsg"></div>
+      <div class="field">
+        <label>Student</label>
+        <select id="certStudent"><option value="">Loading students…</option></select>
+      </div>
+      <div class="field"><label>Course name</label><input type="text" id="certCourse" value="XAUUSD Gold Mastery Course"></div>
+      <button class="btn btn-gold" id="generateCertBtn">Generate &amp; Download PDF</button>
+      <p style="font-size:11.5px; color:var(--muted-2); margin-top:12px;">
+        Generates a real PDF in your browser and logs it to Firestore. It does not
+        auto-email the student — download it here and send it however you prefer.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h3>Issued certificates</h3>
+      <div id="certList"><p class="placeholder-note">Loading…</p></div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module" src="js/certificates.js"></script>
+<script>
+  document.getElementById('menuToggle')?.addEventListener('click', ()=>{
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Students — Admin — Aurum Forex Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="page-loader" id="pageLoader"><div class="spinner"></div></div>
+
+<div class="dash">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Aurum <span class="badge warn" style="margin-left:4px;">Admin</span></div>
+    <div class="side-group">
+      <div class="side-label">Overview</div>
+      <a href="admin.html" class="side-link"><span class="dot"></span>Analytics</a>
+    </div>
+    <div class="side-group">
+      <div class="side-label">Manage</div>
+      <div class="side-link active"><span class="dot"></span>Students</div>
+      <a href="courses.html" class="side-link"><span class="dot"></span>Courses</a>
+      <a href="videos.html" class="side-link"><span class="dot"></span>Videos</a>
+      <a href="notes.html" class="side-link"><span class="dot"></span>PDF Notes</a>
+      <a href="certificates.html" class="side-link"><span class="dot"></span>Certificates</a>
+      <a href="announcements.html" class="side-link"><span class="dot"></span>Announcements</a>
+      <a href="payments.html" class="side-link"><span class="dot"></span>Payments</a>
+    </div>
+    <div class="side-group" style="margin-top:auto;">
+      <a href="dashboard.html" class="side-link"><span class="dot"></span>Student view</a>
+      <a href="#" id="logoutBtn" class="side-link" style="color:var(--down);"><span class="dot"></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div class="dash-welcome"><h1>Students</h1><p>Manage enrolled students, progress, and access.</p></div>
+      <div></div>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="searchInput" placeholder="Search by name or email…">
+    </div>
+
+    <div class="panel" style="overflow-x:auto;">
+      <table class="admin-table" id="studentsTable">
+        <thead><tr><th>Name</th><th>Email</th><th>Progress</th><th>Membership</th><th>Status</th><th>Joined</th><th></th></tr></thead>
+        <tbody id="studentsBody"><tr><td colspan="7" class="cell-muted">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-bg" id="editModalBg"></div>
+  <div class="modal-box">
+    <div class="modal-close" id="editModalClose">✕</div>
+    <div class="modal-title">Edit student</div>
+    <div class="auth-msg" id="editMsg"></div>
+    <div class="field"><label>Name</label><input type="text" id="editName" disabled></div>
+    <div class="field"><label>Email</label><input type="text" id="editEmail" disabled></div>
+    <div class="field"><label>Course progress (%)</label><input type="number" id="editProgress" min="0" max="100"></div>
+    <div class="field"><label>Membership</label><input type="text" id="editMembership"></div>
+    <div class="field">
+      <label>Account status</label>
+      <select id="editStatus"><option value="active">Active</option><option value="suspended">Suspended</option></select>
+    </div>
+    <div class="field">
+      <label>Mark today's attendance</label>
+      <select id="editAttendance"><option value="">— no change —</option><option value="present">Present</option><option value="absent">Absent</option></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-gold" id="saveStudentBtn" style="flex:1;">Save Changes</button>
+      <button class="btn btn-danger" id="deleteStudentBtn">Delete</button>
+    </div>
+    <p style="font-size:11.5px; color:var(--muted-2); margin-top:14px; line-height:1.5;">
+      Delete removes this student's Firestore profile only — it cannot remove their
+      Firebase login account. Deleting the login itself requires a server-side Admin SDK call.
+    </p>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module" src="js/students.js"></script>
+<script>
+  document.getElementById('menuToggle')?.addEventListener('click', ()=>{
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Aurum Forex Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="page-loader" id="pageLoader"><div class="spinner"></div></div>
+
+<div class="dash">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 30 30" fill="none">
+        <path d="M15 2L27 9V21L15 28L3 21V9L15 2Z" stroke="#c9a227" stroke-width="1.2"/>
+        <path d="M15 9L21 13V19L15 23L9 19V13L15 9Z" fill="#c9a227" opacity="0.85"/>
+      </svg>
+      Aurum
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">Overview</div>
+      <div class="side-link active"><span class="dot"></span>Dashboard</div>
+      <a href="profile.html" class="side-link"><span class="dot"></span>Profile</a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">Course</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>My Course</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Live Sessions</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Trading Signals</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>PDF Notes</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Videos</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Downloads</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Certificates</div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">Progress</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Assignments</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Attendance</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Announcements</div>
+    </div>
+
+    <div class="side-group" style="margin-top:auto;">
+      <div class="side-label">Account</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Support</div>
+      <div class="side-link soon" title="Coming soon"><span class="dot"></span>Settings</div>
+      <a href="#" id="logoutBtn" class="side-link" style="color:var(--down);"><span class="dot"></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div class="dash-welcome">
+        <h1 id="welcomeText">Welcome back</h1>
+        <p id="welcomeSub">Here's where your programme stands today.</p>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="lbl">Progress</div>
+        <div class="val" id="statProgress">—</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+      </div>
+      <div class="stat-cell">
+        <div class="lbl">Completion</div>
+        <div class="val" id="statCompletion">—</div>
+        <div class="sub">of the 30-day programme</div>
+      </div>
+      <div class="stat-cell">
+        <div class="lbl">Remaining Days</div>
+        <div class="val" id="statRemaining">—</div>
+        <div class="sub">course access window</div>
+      </div>
+      <div class="stat-cell">
+        <div class="lbl">Joined</div>
+        <div class="val mono" id="statJoined" style="font-size:18px;">—</div>
+        <div class="sub" id="statMembership">—</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Course content</h3>
+      <p class="placeholder-note">
+        My Course, Live Sessions, Trading Signals, PDF Notes, Videos, Downloads, and Certificates
+        aren't wired up yet — they need real hosted content (video URLs, PDF files, a signals feed)
+        before they can show anything real. This dashboard reads and displays your actual account
+        data from Firestore; the rest is scaffolded in the sidebar for when that content exists.
+      </p>
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module" src="js/dashboard.js"></script>
+<script>
+  document.getElementById('menuToggle')?.addEventListener('click', ()=>{
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payments — Admin — Aurum Forex Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<div class="page-loader" id="pageLoader"><div class="spinner"></div></div>
+
+<div class="dash">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">Aurum <span class="badge warn" style="margin-left:4px;">Admin</span></div>
+    <div class="side-group"><div class="side-label">Overview</div><a href="admin.html" class="side-link"><span class="dot"></span>Analytics</a></div>
+    <div class="side-group">
+      <div class="side-label">Manage</div>
+      <a href="students.html" class="side-link"><span class="dot"></span>Students</a>
+      <a href="courses.html" class="side-link"><span class="dot"></span>Courses</a>
+      <a href="videos.html" class="side-link"><span class="dot"></span>Videos</a>
+      <a href="notes.html" class="side-link"><span class="dot"></span>PDF Notes</a>
+      <a href="certificates.html" class="side-link"><span class="dot"></span>Certificates</a>
+      <a href="announcements.html" class="side-link"><span class="dot"></span>Announcements</a>
+      <div class="side-link active"><span class="dot"></span>Payments</div>
+    </div>
+    <div class="side-group" style="margin-top:auto;">
+      <a href="dashboard.html" class="side-link"><span class="dot"></span>Student view</a>
+      <a href="#" id="logoutBtn" class="side-link" style="color:var(--down);"><span class="dot"></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="menu-toggle" id="menuToggle">☰</div>
+      <div class="dash-welcome"><h1>Payments</h1><p>Payment history and manual entry.</p></div>
+      <div></div>
+    </div>
+
+    <div class="panel" style="margin-bottom:24px; border-color:rgba(240,215,140,.35); background:linear-gradient(160deg, rgba(201,162,39,.05), transparent 50%), var(--panel);">
+      <h3>Razorpay checkout — needs one setup step</h3>
+      <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:14px;">
+        The button below opens the real Razorpay Checkout widget, which is safe to run
+        client-side. But creating the order and verifying the payment signature needs
+        your Razorpay <em>secret</em> key, which must never be in browser code — it has
+        to run on a server. Reference Cloud Function code for both endpoints is in
+        <code class="mono">functions/index.js</code> in this delivery; deploy it, then set
+        the two URLs below. Until then this button will show a clear "not configured" message
+        instead of silently failing.
+      </p>
+      <div class="field"><label>Create-order endpoint URL</label><input type="text" id="createOrderUrl" placeholder="https://us-central1-your-project.cloudfunctions.net/createRazorpayOrder"></div>
+      <div class="field"><label>Verify-payment endpoint URL</label><input type="text" id="verifyPaymentUrl" placeholder="https://us-central1-your-project.cloudfunctions.net/verifyRazorpayPayment"></div>
+      <div class="field"><label>Razorpay Key ID (public)</label><input type="text" id="razorpayKeyId" placeholder="rzp_live_xxxxxxxx or rzp_test_xxxxxxxx"></div>
+      <button class="btn btn-gold" id="testCheckoutBtn">Test Checkout (₹9,999)</button>
+    </div>
+
+    <div class="panel" style="margin-bottom:24px;">
+      <h3>Log a manual payment</h3>
+      <div class="auth-msg" id="manualMsg"></div>
+      <div class="field">
+        <label>Student</label>
+        <select id="payStudent"><option value="">Loading students…</option></select>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div class="field"><label>Amount (₹)</label><input type="number" id="payAmount" value="9999"></div>
+        <div class="field">
+          <label>Method</label>
+          <select id="payMethod"><option>UPI</option><option>Bank Transfer</option><option>Cash</option><option>Card</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="field"><label>Reference / transaction ID</label><input type="text" id="payTxnId" placeholder="UPI ref no. or note"></div>
+      <button class="btn btn-ghost" id="logPaymentBtn">Log Payment</button>
+    </div>
+
+    <div class="panel" style="overflow-x:auto;">
+      <h3>Payment history</h3>
+      <table class="admin-table">
+        <thead><tr><th>Student</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="paymentsBody"><tr><td colspan="6" class="cell-muted">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module" src="js/payments.js"></script>
+<script>
+  document.getElementById('menuToggle')?.addEventListener('click', ()=>{
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>
